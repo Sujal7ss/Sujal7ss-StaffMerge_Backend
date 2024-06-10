@@ -20,10 +20,11 @@ const connectDB = async () => {
   }
 };
 connectDB();
-// origin: "https://staff-merge-frontend.vercel.app",  
+// origin: "https://staff-merge-frontend.vercel.app",
+// origin: "http://localhost:3000",    
 app.use(
   cors({
-    origin: "https://staff-merge-frontend.vercel.app",  
+    origin: "https://staff-merge-frontend.vercel.app",
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })

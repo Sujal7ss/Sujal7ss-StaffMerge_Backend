@@ -95,6 +95,28 @@ const login = async (req, res) => {
   }
 };
 
+const aboutme = async (req, res) => {
+  // console.log(req.userId);
+
+  if (req.candidate) {
+    res
+      .status(200)
+      .json({ success: true, candidate: req.candidate, isAuthenticated: true });
+  } else {
+    res.status(200).json({ success: false, isAuthenticated: false });
+  }
+};
+
+const update = async (req, res) => {
+  const candidate = await Candidates.findOneAndUpdate(
+    { email: req.body.email },
+    req.body,
+    { new: true }
+  );
+
+  res.json("update");
+};
+
 const jobList = async (req, res) => {
   try {
     const list = await Jobs.find({});
@@ -108,4 +130,4 @@ const jobList = async (req, res) => {
   }
 };
 
-export { jobList, signup, login };
+export { jobList, signup, login , aboutme, update};
