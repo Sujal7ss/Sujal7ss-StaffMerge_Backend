@@ -92,7 +92,64 @@ const editJob = async (req, res) => {
 
 const applyJob = async (req, res) => {
   try {
-    // Process the uploaded file
+    const token = req.cookies.token;
+    console.log(token)
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Access Denied. No token provided.",
+      });
+    }
+    const decoded = jwt.verify(token, process.env.JWTSECRETKEY);
+    const { userId } = decoded;
+
+    const candidate = await Candidates.findById(userId);
+    if (!candidate) {
+      return res.status(404).json({
+        success: false,
+        message: "Candidate not found",
+      });
+    }
+
+    const job = await Jobs.findById(req.body.jobId);
+    if (!job) {
+      return res.status(404).json({
+        success: false,
+        message: "Job not found",
+      });
+    }
+
+    if (job.appliedCandidates.includes(candidate.email)) {
+      return res.status(400).json({
+        success: false,
+        message: "Already Applied",
+      });
+    }
+
+    job.appliedCandidates.push(candidate.email);
+    await job.save();
+
+    if (
+      !candidate.appliedJobs.some(
+        (job) => job._id.toString() === req.body.jobId
+      )
+    ) {
+      candidate.appliedJobs.push(job._id);
+    } else {
+      return res.status(400).json({
+        success: false,
+        message: "Already Applied",
+      });
+    }
+
+    await candidate.save();
+
+    sendAppliedMail(candidate.email, job.title, job.companyName);
+
+    res.status(200).json({
+      success: true,
+      message: "File uploaded successfully",
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({
@@ -101,6 +158,8 @@ const applyJob = async (req, res) => {
     });
   }
 };
+
+
 const selectCandidate = async (req, res) => {
   const { job, candidate } = req.query;
   sendSelectedMail(job.title, job.companyName, candidate.email)
