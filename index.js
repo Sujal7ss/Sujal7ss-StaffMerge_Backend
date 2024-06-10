@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import candidate from "./routes/candidate.js";
+import employer from "./routes/employer.js";
+
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -46,9 +48,15 @@ app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, uploadDirectory)));
 
 app.use("/api/candidate/", candidate);
+app.use("/api/employer", employer)
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome To StaffMerge", atlas: { db } });
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({message: err.stack});
 });
 
 app.listen(PORT, () => {
