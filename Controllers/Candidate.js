@@ -160,5 +160,62 @@ const appliedJobs = async (req, res) => {
     console.log(err);
   }
 };
+const appliedCandidates = async (req, res) => {
+  try {
+    const { emails } = req.body;
+    if (!emails) {
+      return res.status(200).json({
+        success: false,
+        message: "Something went wrong",
+        candidates: [],
+      });
+    }
 
-export { jobList, signup, login, aboutme, update, jobDetail, appliedJobs};
+    const candidates = [];
+    for (let i = 0; i < emails.length; i++) {
+      const candidate = await Candidates.findOne({ email: emails[i] });
+      candidates.push(candidate);
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Applied Candidates",
+      candidates: candidates,
+    });
+  } catch (err) {
+    return res.status(200).json({
+      success: false,
+      message: "Something went wrong",
+      candidates: [],
+    });
+  }
+};
+
+const getResume = (req, res) => {
+  const userId = req.body.userId || req.params.id;
+  const filePath = path.join(uploadDirectory, `${userId}.pdf`);
+  console.log(filePath);
+  fs.access(filePath, fs.constants.F_OK, (err) => {
+    if (err) {
+      console.error('File does not exist:', filePath);
+      return res.status(404).json({
+        success: false,
+        message: 'Resume not found',
+      });
+    }
+
+    console.log("file Exists")
+    // If file exists, send the file
+    res.sendFile(filePath, (err) => {
+      if (err) {
+        console.error('File send error:', err);
+        res.status(500).json({
+          success: false,
+          message: 'Error sending the file',
+        });
+      }
+    })
+  });
+};
+
+export { jobList, signup, login, aboutme, update, jobDetail, appliedJobs, appliedCandidates, getResume};
