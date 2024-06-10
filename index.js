@@ -2,8 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import candidate from "./Routes/candidate.js";
-import employer from "./Routes/employer.js"
+import candidate from "./routes/candidate.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -33,7 +32,7 @@ connectDB();
 // origin: "http://localhost:3000",    
 app.use(
   cors({
-    origin: "https://staff-merge-frontend.vercel.app",
+    origin: "https://staff-merge-frontend.vercel.app",    
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -47,7 +46,6 @@ app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, uploadDirectory)));
 
 app.use("/api/candidate/", candidate);
-app.use("/api/employer/", employer);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome To StaffMerge", atlas: { db } });
