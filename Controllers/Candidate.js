@@ -74,6 +74,8 @@ const login = async (req, res) => {
         .cookie("token", token, {
           httpOnly: false,
           maxAge: 24 * 60 * 60 * 1000,
+          secure: process.env.NODE_ENV === "production", // Send cookie only over HTTPS
+          sameSite: "None", // Needed for cross-site cookie
         })
         .status(200)
         .json({
@@ -130,4 +132,4 @@ const jobList = async (req, res) => {
   }
 };
 
-export { jobList, signup, login , aboutme, update};
+export { jobList, signup, login, aboutme, update };
