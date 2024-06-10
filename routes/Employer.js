@@ -13,6 +13,6 @@ router.post("/jobDetails", jobDetails);
 router.get("/postedJobs", postedJobs)
 
 router.post("/editJob/:id", editJob)
-// router.get("/selectCandidate", selectCandidate)
+router.get("/selectCandidate", selectCandidate)
 
 export default router
