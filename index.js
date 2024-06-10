@@ -4,6 +4,14 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import candidate from "./routes/candidate.js";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Get the current directory name
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadDirectory = "/uploads";
+
 const app = express();
 
 const DB =process.env.CONNECTION_STRING
@@ -24,7 +32,7 @@ connectDB();
 // origin: "http://localhost:3000",    
 app.use(
   cors({
-    origin: "https://staff-merge-frontend.vercel.app",
+    origin: "http://localhost:3000",    
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
@@ -35,6 +43,7 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); // to handle JSON payloads
 app.use(express.static("public"));
+app.use("/uploads", express.static(path.join(__dirname, uploadDirectory)));
 
 app.use("/api/candidate/", candidate);
 
