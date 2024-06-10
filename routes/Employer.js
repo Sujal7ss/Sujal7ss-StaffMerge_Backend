@@ -10,7 +10,7 @@ router.post("/companyDetails", companyDetails);
 router.get("/companyDetails", companyData)
 router.post("/jobDetails", jobDetails);
 // router.post("/companyDetails", companyDataUpdate)
-// router.get("/postedJobs", postedJobs)
+router.get("/postedJobs", postedJobs)
 
 // router.post("/editJob/:id", editJob)
 // router.get("/selectCandidate", selectCandidate)
