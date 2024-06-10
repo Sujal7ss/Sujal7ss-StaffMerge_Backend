@@ -1,11 +1,14 @@
 import express from "express";
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import candidate from "./routes/candidate.js";
 import cors from "cors";
 const app = express();
 
-const DB =
-  "mongodb+srv://sujalchahande3:Smith%40710@cluster0.bis5mkj.mongodb.net/Data?retryWrites=true&w=majority&appName=Cluster0";
+const DB =process.env.CONNECTION_STRING
+const PORT = process.env.PORT || 8000
+  
 let db = "not connected";
 const connectDB = async () => {
   try {
@@ -17,14 +20,20 @@ const connectDB = async () => {
   }
 };
 connectDB();
-
+// origin: "https://staff-merge-frontend.vercel.app",  
 app.use(
   cors({
-    origin: "https://staff-merge-frontend.vercel.app", 
+    origin: "https://staff-merge-frontend.vercel.app",  
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
 );
+
+//Middlewares
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); // to handle JSON payloads
+app.use(express.static("public"));
 
 app.use("/api/candidate/", candidate);
 
@@ -32,8 +41,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome To StaffMerge", atlas: { db } });
 });
 
-app.listen(8000, () => {
-  console.log("listening on port 3000");
+app.listen(PORT, () => {
+  console.log("listening on port 8000");
 });
 
 export default app;
