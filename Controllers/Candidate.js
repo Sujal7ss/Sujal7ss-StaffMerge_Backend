@@ -132,4 +132,15 @@ const jobList = async (req, res) => {
   }
 };
 
-export { jobList, signup, login, aboutme, update };
+const jobDetail = async (req, res) => {
+  const jobId = req.params.id;
+
+  const job = await Jobs.findOne({ _id: jobId });
+
+  res.status(200).json({
+    success: true,
+    job: job,
+  });
+};
+
+export { jobList, signup, login, aboutme, update, jobDetail };
