@@ -142,4 +142,23 @@ const jobDetail = async (req, res) => {
   });
 };
 
-export { jobList, signup, login, aboutme, update, jobDetail };
+const appliedJobs = async (req, res) => {
+  try {
+    const list = req.candidate.appliedJobs;
+
+    let jobList = []
+    for(let i = 0; i < list.length; i++) {
+      const job = await Jobs.findOne({_id : list[i]})
+      jobList.push(job);
+    }
+    // console.log(list)
+    res.status(200).json({
+      success: true,
+      jobs: jobList,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export { jobList, signup, login, aboutme, update, jobDetail, appliedJobs};

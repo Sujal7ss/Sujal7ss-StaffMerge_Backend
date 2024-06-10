@@ -1,8 +1,8 @@
 import express from "express";
-import {signup,login,  jobList, aboutme, update, jobDetail} from "../Controllers/Candidate.js";
-import {applyJob} from "../Controllers/Job.js"
-import {isAuthenticated} from "../Middleware/verifyMail.js"
-import uploadResume from '../Middleware/file.js'
+import {signup,login,  jobList, aboutme, update, jobDetail, appliedJobs} from "../Controllers/Candidate.js";
+import {applyJob} from "../Controllers/Job.js";
+import {isAuthenticated} from "../Middleware/verifyMail.js";
+import uploadResume from '../Middleware/file.js';
 
 const router = express.Router();
 
@@ -13,5 +13,6 @@ router.post("/update",  update);
 router.get("/joblist", jobList);
 router.get("/jobDetails/:id", jobDetail)
 router.post("/apply", uploadResume , applyJob)
+router.get("/appliedJobs", isAuthenticated, appliedJobs)
 
 export default router;
