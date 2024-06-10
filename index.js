@@ -20,7 +20,7 @@ connectDB();
 
 app.use(
   cors({
-    origin: "https://staff-merge-frontend.vercel.app/", 
+    origin: "https://staff-merge-frontend.vercel.app", 
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     credentials: true,
   })
