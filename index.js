@@ -48,7 +48,7 @@ app.use(express.static("public"));
 app.use("/uploads", express.static(path.join(__dirname, uploadDirectory)));
 
 app.use("/api/candidate/", candidate);
-// app.use("/api/employer", employer)
+app.use("/api/employer", employer)
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome To StaffMerge", atlas: { db } });
