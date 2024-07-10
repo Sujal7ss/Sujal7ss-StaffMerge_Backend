@@ -1,5 +1,5 @@
 import express from 'express';
-import {signup, login} from '../Controllers/Employer.js'
+import {signup, login, logout} from '../Controllers/Employer.js'
 import {companyDetails, companyData, companyDataUpdate} from '../Controllers/Company.js'
 import {jobDetails, postedJobs, editJob, selectCandidate} from "../Controllers/Job.js"
 const router = express.Router();
@@ -14,5 +14,6 @@ router.get("/postedJobs", postedJobs)
 
 router.post("/editJob/:id", editJob)
 router.get("/selectCandidate", selectCandidate)
+router.post("/logout", logout)
 
 export default router

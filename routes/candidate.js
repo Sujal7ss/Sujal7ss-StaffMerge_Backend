@@ -1,5 +1,5 @@
 import express from "express";
-import {signup,login,  jobList, aboutme, update, jobDetail, appliedJobs, appliedCandidates, getResume} from "../Controllers/Candidate.js";
+import {signup,login,  jobList, aboutme, update, jobDetail, appliedJobs, appliedCandidates, getResume, logout} from "../Controllers/Candidate.js";
 import {applyJob} from "../Controllers/Job.js";
 import {isAuthenticated} from "../Middleware/verifyMail.js";
 import uploadResume from '../Middleware/file.js';
@@ -16,5 +16,6 @@ router.post("/apply",  applyJob)
 router.get("/appliedJobs", isAuthenticated, appliedJobs)
 router.post("/appliedCandidates", appliedCandidates)
 router.get("/resume/:id", getResume)
+router.post("/logout", logout)
 
 export default router;

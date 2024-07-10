@@ -2,8 +2,8 @@ import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import candidate from "./routes/candidate.js";
-import employer from "./routes/Employer.js";
+import candidate from "./Routes/candidate.js";
+import employer from "./Routes/Employer.js";
 
 import cors from "cors";
 import path from "path";
