@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import candidate from "./Routes/candidate.js";
-import employer from "./Routes/Employer.js";
+import employer from "./Routes/employer.js";
 
 import cors from "cors";
 import path from "path";
